@@ -1,6 +1,6 @@
 # Action of Action
 
-GitHub Action for building GitHub Action.
+A GitHub action for building GitHub actions.
 
 Push contents in ./dist directory to remote origin as an orphan and add tags for source branch and product branch.
 
