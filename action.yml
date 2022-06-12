@@ -1,0 +1,51 @@
+name: Build GitHub Action
+description: Convert typescript to javascript and push to remote as orphan
+author: Hyperbola
+
+inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+    - name: Setup nodejs v16
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Build project
+      shell: /usr/bin/bash -e {0}
+      run: yarn install --frozen-lockfile && yarn build
+    - name: Get version
+      id: version
+      uses: martinbeentjes/npm-get-version-action@main
+    - name: Push temporary branch
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ inputs.github-token }}
+        publish_dir: ./dist
+        publish_branch: tmp
+        commit_message: build
+        user_name: deploy-bot
+        user_email: deploy-bot@hyperbola.me
+        force_orphan: true
+        disable_nojekyll: true
+    - name: Bump version
+      shell: /usr/bin/bash -e {0}
+      run: |
+        version=${{ steps.version.outputs.current-version }}
+        # source version tag
+        git tag -f src-$version main
+        # version tag
+        git fetch origin tmp
+        git tag -f $version origin/tmp
+        # major version tag
+        major_version=${version%%.*}
+        git tag -f $major_version $version
+        # push tags
+        git push -f origin src-$version $version $major_version
+    - name: Delete temporary branch
+      shell: /usr/bin/bash -e {0}
+      run: git push origin --delete tmp
