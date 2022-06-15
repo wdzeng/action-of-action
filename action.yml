@@ -4,7 +4,7 @@ author: Hyperbola
 
 inputs:
   github-token:
-    description: "GitHub token"
+    description: github token
     required: true
   dist-dir:
     description: directory whose contents are to be pushed
@@ -61,7 +61,7 @@ runs:
         # version tag
         git fetch origin tmp
         git tag -f $version origin/tmp
-        # minor verion tag
+        # minor version tag
         minor_version=${version%.*}
         git tag -f $minor_version $version
         # major version tag
