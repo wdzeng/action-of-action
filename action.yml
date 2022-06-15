@@ -41,11 +41,14 @@ runs:
         # version tag
         git fetch origin tmp
         git tag -f $version origin/tmp
+        # minor verion tag
+        minor_version=${version%.*}
+        git tag -f $minor_version $version
         # major version tag
         major_version=${version%%.*}
         git tag -f $major_version $version
         # push tags
-        git push -f origin src-$version $version $major_version
+        git push -f origin src-$version $version $minor_version $major_version
     - name: Delete temporary branch
       shell: /usr/bin/bash -e {0}
       run: git push origin --delete tmp
