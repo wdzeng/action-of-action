@@ -4,8 +4,28 @@ author: Hyperbola
 
 inputs:
   github-token:
-    description: 'GitHub token'
+    description: "GitHub token"
     required: true
+  dist-dir:
+    description: directory whose contents are to be pushed
+    required: false
+    default: ./dist
+  dist-branch:
+    description: target branch to push the build
+    required: false
+    default: release
+  user-name:
+    description: commit user for the build
+    required: false
+    default: deploy-bot
+  user-email:
+    description: commit email for the build
+    required: false
+    default: deploy-bot@hyperbola.me
+  commit-message: 
+    description: commit message for the build
+    required: false
+    default: build
 
 runs:
   using: composite
@@ -21,16 +41,16 @@ runs:
     - name: Get version
       id: version
       uses: martinbeentjes/npm-get-version-action@main
-    - name: Push temporary branch
+    - name: Push to release branch
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ inputs.github-token }}
-        publish_dir: ./dist
-        publish_branch: tmp
-        commit_message: build
-        user_name: deploy-bot
-        user_email: deploy-bot@hyperbola.me
-        force_orphan: true
+        publish_dir: ${{ inputs.dist-dir }}
+        publish_branch: ${{ inputs.dist-branch }}
+        commit_message: ${{ inputs.commit-message }}
+        user_name: ${{ inputs.user-name }}
+        user_email: ${{ inputs.user-email }}
+        force_orphan: false
         disable_nojekyll: true
     - name: Bump version
       shell: /usr/bin/bash -e {0}
@@ -49,6 +69,3 @@ runs:
         git tag -f $major_version $version
         # push tags
         git push -f origin src-$version $version $minor_version $major_version
-    - name: Delete temporary branch
-      shell: /usr/bin/bash -e {0}
-      run: git push origin --delete tmp
