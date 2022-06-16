@@ -5,7 +5,8 @@ author: Hyperbola
 inputs:
   github-token:
     description: github token
-    required: true
+    required: false
+    default: ${{ github.token }}
   dist-dir:
     description: directory whose contents are to be pushed
     required: false
