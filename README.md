@@ -20,6 +20,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: wdzeng/action-of-action@v1
-        with:
-          github-action: ${{ secrets.GITHUB_ACTION }}
 ```
