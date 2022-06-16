@@ -18,11 +18,11 @@ inputs:
   user-name:
     description: commit user for the build
     required: false
-    default: deploy-bot
+    default: bot
   user-email:
     description: commit email for the build
     required: false
-    default: deploy-bot@hyperbola.me
+    default: bot@hyperbola.me
   commit-message: 
     description: commit message for the build
     required: false
