@@ -41,7 +41,7 @@ runs:
       run: yarn install --frozen-lockfile && yarn build
     - name: Get version
       id: version
-      uses: martinbeentjes/npm-get-version-action@main
+      uses: wdzeng/version@v1
     - name: Push to release branch
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -55,18 +55,19 @@ runs:
         disable_nojekyll: true
     - name: Bump version
       shell: /usr/bin/bash -e {0}
+      env:
+        VER_MAJ: ${{ steps.version.outputs.major }}
+        VER_MIN: ${{ steps.version.outputs.minor }}
+        VERSION: ${{ steps.version.outputs.version }}
       run: |
-        version=${{ steps.version.outputs.current-version }}
         # source version tag
-        git tag -f src-$version main
+        git tag -f src-$VERSION main
         # version tag
-        git fetch origin tmp
-        git tag -f $version origin/tmp
+        git fetch origin release
+        git tag -f $VERSION origin/release
         # minor version tag
-        minor_version=${version%.*}
-        git tag -f $minor_version $version
+        git tag -f $VER_MIN origin/release
         # major version tag
-        major_version=${version%%.*}
-        git tag -f $major_version $version
+        git tag -f $VER_MAJ origin/release
         # push tags
-        git push -f origin src-$version $version $minor_version $major_version
+        git push -f origin src-$VERSION $VERSION $VER_MIN $VER_MAJ
