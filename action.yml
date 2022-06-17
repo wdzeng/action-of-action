@@ -42,6 +42,8 @@ runs:
     - name: Get version
       id: version
       uses: wdzeng/version@v1
+      with:
+        prefix: v
     - name: Push to release branch
       uses: peaceiris/actions-gh-pages@v3
       with:
