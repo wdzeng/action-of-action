@@ -36,9 +36,13 @@ runs:
       uses: actions/setup-node@v3
       with:
         node-version: 16
+    - name: Install pnpm and project dependencies
+      uses: pnpm/action-setup@v2.2.2
+      with:
+        run_install: true
     - name: Build project
       shell: /usr/bin/bash -e {0}
-      run: yarn install --frozen-lockfile && yarn build
+      run: pnpm build
     - name: Get version
       id: version
       uses: wdzeng/version@v1
