@@ -23,7 +23,7 @@ inputs:
     description: commit email for the build
     required: false
     default: bot@hyperbola.me
-  commit-message: 
+  commit-message:
     description: commit message for the build
     required: false
     default: build
