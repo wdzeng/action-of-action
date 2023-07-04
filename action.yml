@@ -23,10 +23,6 @@ inputs:
     description: commit email for the build
     required: false
     default: bot@hyperbola.me
-  commit-message:
-    description: commit message for the build
-    required: false
-    default: build
 
 runs:
   using: composite
@@ -54,7 +50,7 @@ runs:
         github_token: ${{ inputs.github-token }}
         publish_dir: ${{ inputs.dist-dir }}
         publish_branch: ${{ inputs.dist-branch }}
-        commit_message: ${{ inputs.commit-message }}
+        full_commit_message: build ${{ github.sha }} (${{ steps.version.outputs.version }})
         user_name: ${{ inputs.user-name }}
         user_email: ${{ inputs.user-email }}
         force_orphan: false
