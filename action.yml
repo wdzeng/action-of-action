@@ -1,5 +1,5 @@
 name: Action of Action
-description: Convert a TS action to JS and push to remote as an orphan
+description: Convert a TS action to JS and push to a release branch
 author: hyperbola
 
 inputs:
