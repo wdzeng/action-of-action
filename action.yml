@@ -69,11 +69,11 @@ runs:
         # source version tag
         git tag -f src-$VERSION main
         # version tag
-        git fetch origin release
-        git tag -f $VERSION origin/release
+        git fetch origin ${{ inputs.dist-branch }}
+        git tag -f $VERSION origin/${{ inputs.dist-branch }}
         # minor version tag
-        git tag -f $VER_MIN origin/release
+        git tag -f $VER_MIN origin/${{ inputs.dist-branch }}
         # major version tag
-        git tag -f $VER_MAJ origin/release
+        git tag -f $VER_MAJ origin/${{ inputs.dist-branch }}
         # push tags
         git push -f origin src-$VERSION $VERSION $VER_MIN $VER_MAJ
