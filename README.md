@@ -23,5 +23,5 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: wdzeng/action-of-action@v1
+      - uses: wdzeng/action-of-action@v2
 ```
