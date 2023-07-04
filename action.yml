@@ -37,7 +37,7 @@ runs:
       with:
         node-version: 16
     - name: Install pnpm and project dependencies
-      uses: pnpm/action-setup@v2.2.2
+      uses: pnpm/action-setup@v2
       with:
         run_install: true
     - name: Build project
