@@ -1,6 +1,6 @@
-name: Build GitHub Action
-description: Convert typescript to javascript and push to remote as orphan
-author: Hyperbola
+name: Action of Action
+description: Convert a TS action to JS and push to remote as an orphan
+author: hyperbola
 
 inputs:
   github-token:
