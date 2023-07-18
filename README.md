@@ -2,7 +2,8 @@
 
 A GitHub action for building GitHub actions.
 
-Push contents in ./dist directory to remote origin as an orphan and add tags for source branch and product branch.
+Push contents in ./dist directory to remote origin as an orphan and add tags for
+source branch and product branch.
 
 ## Prerequisites
 
