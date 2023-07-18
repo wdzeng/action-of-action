@@ -7,6 +7,7 @@ source branch and product branch.
 
 ## Prerequisites
 
+- Node.js >= v18.
 - Use pnpm and set `packageManager` in package.json.
 
 ## Usage
