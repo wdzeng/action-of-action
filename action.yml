@@ -11,6 +11,10 @@ inputs:
     description: directory whose contents are to be pushed
     required: false
     default: ./dist
+  remote-name:
+    description: remote name to push to
+    required: false
+    default: origin
   dist-branch:
     description: target branch to push the build
     required: false
@@ -69,15 +73,21 @@ runs:
         VER_MAJ: ${{ steps.version.outputs.major }}
         VER_MIN: ${{ steps.version.outputs.minor }}
         VERSION: ${{ steps.version.outputs.version }}
+        PRERELEASE: ${{ steps.version.outputs.pre-release }}
       run: |
-        # source version tag
-        git tag -f src-$VERSION main
-        # version tag
-        git fetch origin ${{ inputs.dist-branch }}
-        git tag -f $VERSION origin/${{ inputs.dist-branch }}
-        # minor version tag
-        git tag -f $VER_MIN origin/${{ inputs.dist-branch }}
-        # major version tag
-        git tag -f $VER_MAJ origin/${{ inputs.dist-branch }}
-        # push tags
-        git push -f origin src-$VERSION $VERSION $VER_MIN $VER_MAJ
+        # Set source version tag.
+        git tag src-$VERSION HEAD
+
+        # Set destination version tags.
+        git fetch ${{ inputs.remote-name }} ${{ inputs.dist-branch }}
+        git tag $VERSION ${{ inputs.remote-name }}/${{ inputs.dist-branch }}
+        if [[ "$PRERELEASE" == 'false' ]]; then
+          git tag -f $VER_MIN ${{ inputs.remote-name }}/${{ inputs.dist-branch }}
+          git tag -f $VER_MAJ ${{ inputs.remote-name }}/${{ inputs.dist-branch }}
+        fi
+
+        # Push tags to remote.
+        git push ${{ inputs.remote-name }} src-$VERSION $VERSION
+        if [[ "$PRERELEASE" == 'false' ]]; then
+          git push -f origin $VER_MIN $VER_MAJ
+        fi
