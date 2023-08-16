@@ -28,10 +28,18 @@ runs:
   using: composite
   steps:
     - uses: actions/checkout@v3
-    - name: Setup nodejs v18
+    - name: Install yq command
+      uses: mikefarah/yq@master
+    - name: Determine Node.js version
+      id: node-version
+      shell: /usr/bin/bash -e {0}
+      run: |
+        TARGET_NODE_VERSION=$(yq .runs.using action.yml | sed -e 's/^node//')
+        echo "version=${TARGET_NODE_VERSION}" >> "$GITHUB_OUTPUT"
+    - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: ${{ steps.node-version.outputs.version }}}
     - name: Install pnpm and project dependencies
       uses: pnpm/action-setup@v2
       with:
