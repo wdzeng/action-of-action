@@ -13,7 +13,6 @@ A GitHub action for building GitHub actions written in TypeScript. It does the f
 ## Prerequisites
 
 - The project can be installed using pnpm.
-- The pnpm version is described in the `packageManager` field in package.json.
 - The action can be built by `build` command defined in `scripts` field in package.json.
 - The project version is specified in `version` field in package.json.
 - The project version is a semver. For pre-releases, only `alpha` and `beta` are allowed.

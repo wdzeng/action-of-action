@@ -47,6 +47,7 @@ runs:
     - name: Install pnpm and project dependencies
       uses: pnpm/action-setup@v2
       with:
+        version: ^8.14.2
         run_install: true
     - name: Build project
       shell: /usr/bin/bash -e {0}
