@@ -45,9 +45,9 @@ runs:
       with:
         node-version: ${{ steps.node-version.outputs.version }}
     - name: Install pnpm and project dependencies
-      uses: pnpm/action-setup@v2
+      uses: pnpm/action-setup@v3
       with:
-        version: ^8.14.2
+        version: ^9.7.0
         run_install: true
     - name: Build project
       shell: /usr/bin/bash -e {0}
