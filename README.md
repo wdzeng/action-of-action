@@ -43,7 +43,7 @@ jobs:
     name: Build action
     runs-on: ubuntu-latest
     steps:
-      - uses: wdzeng/action-of-action@v3
+      - uses: wdzeng/action-of-action@v4
 ```
 
 You don't need to run `actions/checkout`. This action does that for you.
